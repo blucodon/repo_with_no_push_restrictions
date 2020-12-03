@@ -1,7 +1,8 @@
-SpaceShip.java
+AI.java
 package com.zetcode;
 
-	
+aWs_account: "3238-1074-5545”
+
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
@@ -154,27 +155,36 @@ public class Board extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        doDrawing(g);
         
-        Toolkit.getDefaultToolkit().sync();
-    }
-    
-    private void doDrawing(Graphics g) {
+        spaceShip.move();
         
-        Graphics2D g2d = (Graphics2D) g;
+        repaint(spaceShip.getX()-1, spaceShip.getY()-1, 
+                spaceShip.getWidth()+2, spaceShip.getHeight()+2);     
+    }    
 
-        g2d.drawImage(spaceShip.getImage(), spaceShip.getX(), 
-            spaceShip.getY(), this);
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        
-        step();
-    }
-    
+    private class TAdapter extends KeyAdapter {
 
-  
+        @Override
+        public void keyReleased(KeyEvent e) {
+            spaceShip.keyReleased(e);
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            spaceShip.keyPressed(e);
+        }
+    }
+}
+This is the Board class.
+private void doDrawing(Graphics g) {
+    
+    Graphics2D g2d = (Graphics2D) g;
+    
+    g2d.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
+}
+In the doDrawing() method, we draw the spaceship with the drawImage() method. We get the image and the coordinates from the sprite class.
+@Override
+public void actionPerformed(ActionEvent e) {
     
     step();
 }
